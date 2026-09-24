@@ -327,6 +327,7 @@ section { position: relative; padding: 120px 0; }
 .course-cover::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,.25) 1px, transparent 1.3px); background-size: 10px 10px; mix-blend-mode: overlay; }
 .course-cover span { transition: scale .6s var(--ease), rotate .6s var(--ease); position: relative; z-index: 1; }
 .course:hover .course-cover span { scale: 1.18; rotate: -6deg; }
+.cover-svg { width: 72px; height: 72px; display: block; filter: drop-shadow(0 0 14px rgba(255,255,255,.45)); }
 .course-body { padding: 20px 22px 22px; }
 .course-meta { display: flex; gap: 14px; font-size: 13px; color: var(--muted); margin-bottom: 16px; }
 .tag { display: inline-block; font-size: 12px; padding: 3px 10px; border-radius: 999px; background: rgba(102,20,216,.2); color: var(--lilac); margin-bottom: 10px; }
