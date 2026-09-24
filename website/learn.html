@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Learning · CyberShield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <a href="index.html" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></span>CyberShield</a>
+    <ul class="nav-links">
+      <li><a class="nav-link" href="index.html">Home</a></li>
+      <li><a class="nav-link active" href="learn.html">Learn</a></li>
+      <li><a class="nav-link" href="index.html#courses">Courses</a></li>
+    </ul>
+    <ul class="nav-auth" data-auth-slot>
+      <li><a class="nav-link" href="auth.html#login">Login</a></li>
+      <li><a class="btn btn-sm" href="auth.html#register">Register</a></li>
+    </ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="container">
+    <header class="dash-head">
+      <span class="eyebrow">Course · Cyber Defense Fundamentals</span>
+      <h1 style="font-size:clamp(28px,4vw,44px);margin-top:16px" id="hello">Welcome, <span class="grad-text">guardian</span></h1>
+      <p style="color:var(--muted);margin:8px 0 0" id="progressLabel"></p>
+      <div class="progress"><i id="progressBar" style="width:0"></i></div>
+    </header>
+
+    <div class="reader">
+      <aside class="chapter-list" id="chapters"></aside>
+      <section class="card stage" id="stage" style="padding:26px"></section>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const CHAPTERS = [
+      { title: 'The Fake Bank Email', emoji: '🎣',
+        panels: [
+          { char: '📧', side: 'l', text: '"URGENT: Your account is locked. Verify within 1 hour!"', sfx: 'PING!' },
+          { char: '🧑‍💻', side: 'r', text: 'Urgency + a scary threat… classic phishing pressure.' },
+          { char: '🛡️', side: 'r', text: 'Hover the link: it points to bank-verify-login.xyz — not my bank!', sfx: 'BUSTED!', wide: true },
+        ],
+        q: 'What is the safest thing to do?',
+        options: ['Click the link and log in quickly', 'Reply asking if it is real', 'Report it and visit the bank site directly'], answer: 2 },
+      { title: 'Password Party', emoji: '🔐',
+        panels: [
+          { char: '🦹', side: 'l', text: '"password123"? I cracked that in 0.2 seconds!', sfx: 'CRACK!' },
+          { char: '👩‍🎓', side: 'r', text: 'Then I\'ll use a long passphrase: "violet-comet-tea-harbor".' },
+          { char: '🔑', side: 'l', text: 'Plus a password manager and 2FA — now brute force takes centuries.', wide: true, sfx: 'LOCKED!' },
+        ],
+        q: 'Which password is strongest?',
+        options: ['P@ssw0rd!', 'violet-comet-tea-harbor', 'MyDog2026'], answer: 1 },
+      { title: 'Café Wi-Fi Trap', emoji: '📡',
+        panels: [
+          { char: '☕', side: 'l', text: '"Free_Cafe_WiFi" — no password needed!', sfx: 'CONNECT?' },
+          { char: '🕵️', side: 'r', text: 'An attacker can run an evil-twin hotspot and read your traffic.' },
+          { char: '🛡️', side: 'r', text: 'Use a VPN, stick to HTTPS, and never log in to banking on open Wi-Fi.', wide: true },
+        ],
+        q: 'What protects you most on public Wi-Fi?',
+        options: ['Turning on Bluetooth', 'Using a trusted VPN', 'Clearing browser history'], answer: 1 },
+      { title: 'Firewall Frontline', emoji: '🌐',
+        panels: [
+          { char: '👾', side: 'l', text: 'Scanning ports 1-65535… found port 23 (Telnet) open!', sfx: 'SCAN!' },
+          { char: '👨‍🔧', side: 'r', text: 'Close Telnet, use SSH, and add an ACL on the router.' },
+          { char: '🧱', side: 'l', text: 'access-list 101 deny tcp any any eq 23 — attack blocked at the edge.', wide: true, sfx: 'DENIED!' },
+        ],
+        q: 'Why replace Telnet with SSH?',
+        options: ['SSH is encrypted', 'Telnet is slower', 'SSH uses less bandwidth'], answer: 0 },
+    ];
+
+    const user = Auth.current();
+    const key = 'cs_progress_' + (user ? user.email : 'guest');
+    const done = new Set(store.get(key, []));
+    let current = Math.min(done.size, CHAPTERS.length - 1);
+
+    const $ = id => document.getElementById(id);
+    const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+
+    if (user) $('hello').innerHTML = `Welcome, <span class="grad-text">${esc(user.name)}</span>`;
+
+    function renderProgress() {
+      const pct = Math.round(done.size / CHAPTERS.length * 100);
+      $('progressBar').style.width = pct + '%';
+      $('progressLabel').textContent = `${done.size} of ${CHAPTERS.length} chapters complete · ${pct}%`;
+    }
+
+    function renderList() {
+      $('chapters').innerHTML = CHAPTERS.map((c, i) => `
+        <button class="chapter ${i === current ? 'on' : ''}" data-i="${i}">
+          <span>${c.emoji} ${i + 1}. ${c.title}</span>${done.has(i) ? '<span class="done">✓</span>' : ''}
+        </button>`).join('') + `
+        <button class="chapter ${current === 'cert' ? 'on' : ''}" data-i="cert">
+          <span>🏆 Certificate</span>${done.size === CHAPTERS.length ? '<span class="done">Unlocked</span>' : '<span style="color:var(--muted)">🔒</span>'}
+        </button>`;
+      $('chapters').querySelectorAll('.chapter').forEach(b => b.addEventListener('click', () => {
+        current = b.dataset.i === 'cert' ? 'cert' : +b.dataset.i;
+        render();
+      }));
+    }
+
+    function renderChapter(i) {
+      const c = CHAPTERS[i];
+      $('stage').innerHTML = `
+        <span class="tag">Chapter ${i + 1}</span>
+        <h2 style="font-size:26px">${c.emoji} ${c.title}</h2>
+        <div class="comic-panels">
+          ${c.panels.map(p => `
+            <div class="panel ${p.wide ? 'wide' : ''}"><div class="halftone"></div>
+              <span class="bubble ${p.side === 'r' ? 'right' : ''}">${esc(p.text)}</span>
+              <span class="char ${p.side === 'r' ? 'l' : 'r'}">${p.char}</span>
+              ${p.sfx ? `<span class="sfx" style="top:auto;bottom:14px;${p.side === 'r' ? '' : 'left:18px;right:auto'}">${p.sfx}</span>` : ''}
+            </div>`).join('')}
+        </div>
+        <h3 style="font-size:18px">🧠 Challenge: ${c.q}</h3>
+        <div class="quiz">${c.options.map((o, k) => `<button data-k="${k}">${esc(o)}</button>`).join('')}</div>
+        <div id="feedback" style="min-height:24px;color:var(--muted)"></div>`;
+
+      $('stage').querySelectorAll('.quiz button').forEach(btn => btn.addEventListener('click', () => {
+        const ok = +btn.dataset.k === c.answer;
+        btn.classList.add(ok ? 'right' : 'wrong');
+        if (!ok) { $('feedback').textContent = 'Not quite — re-read the comic and try again.'; return; }
+        done.add(i); store.set(key, [...done]);
+        $('feedback').innerHTML = `✅ Correct! ${i < CHAPTERS.length - 1 ? '' : 'Course complete!'} <button class="btn btn-sm" id="nextBtn" style="margin-left:10px">${i < CHAPTERS.length - 1 ? 'Next chapter' : 'Claim certificate'} <span class="arrow">→</span></button>`;
+        $('nextBtn').addEventListener('click', () => { current = i < CHAPTERS.length - 1 ? i + 1 : 'cert'; render(); });
+        renderProgress(); renderList();
+      }));
+
+      if (window.gsap) {
+        gsap.from('#stage .panel', { scale: 0.7, rotate: k => (k % 2 ? 6 : -6), opacity: 0, stagger: 0.18, duration: 0.7, ease: 'back.out(1.8)' });
+        gsap.from('#stage .bubble', { scale: 0, transformOrigin: 'bottom left', stagger: 0.2, delay: 0.35, duration: 0.45, ease: 'back.out(3)' });
+      }
+    }
+
+    function renderCert() {
+      const complete = done.size === CHAPTERS.length;
+      if (!complete) {
+        $('stage').innerHTML = `<h2 style="font-size:26px">🔒 Certificate locked</h2>
+          <p style="color:var(--muted)">Complete all ${CHAPTERS.length} chapters to unlock your certificate. You have ${CHAPTERS.length - done.size} left.</p>`;
+        return;
+      }
+      if (!user) {
+        $('stage').innerHTML = `<h2 style="font-size:26px">🎉 You finished the course!</h2>
+          <p style="color:var(--muted)">Create a free account so we can put your name on the certificate.</p>
+          <a class="btn" href="auth.html#register">Register to claim <span class="arrow">→</span></a>`;
+        return;
+      }
+      const id = 'CS-' + new Date().getFullYear() + '-' + (Math.abs([...user.email].reduce((h, ch) => (h * 31 + ch.charCodeAt(0)) | 0, 7)) % 100000).toString().padStart(5, '0');
+      $('stage').innerHTML = `
+        <div class="cert" id="certView">
+          <small>CERTIFICATE OF COMPLETION</small>
+          <h3>Cyber Defense Fundamentals</h3>
+          <p style="color:var(--muted);margin:0">proudly awarded to</p>
+          <div class="name grad-text" style="margin:12px 0">${esc(user.name)}</div>
+          <p style="color:var(--muted);font-size:13px;margin:0">CyberShield Academy · ${new Date().toLocaleDateString()} · ID ${id}</p>
+          <div class="seal">🛡️</div>
+        </div>
+        <div style="display:flex;gap:12px;margin-top:22px;flex-wrap:wrap">
+          <button class="btn" id="dl">Download PNG <span class="arrow">↓</span></button>
+        </div>`;
+      $('dl').addEventListener('click', () => downloadCert(user.name, id));
+      if (window.gsap) gsap.from('#certView', { rotateX: 40, y: 60, opacity: 0, transformPerspective: 1000, duration: 1.1, ease: 'power4.out' });
+    }
+
+    function downloadCert(name, id) {
+      const W = 1600, H = 1131, c = document.createElement('canvas');
+      c.width = W; c.height = H;
+      const g = c.getContext('2d');
+      const bg = g.createLinearGradient(0, 0, W, H);
+      bg.addColorStop(0, '#1c0d38'); bg.addColorStop(0.6, '#0c0519'); bg.addColorStop(1, '#07040f');
+      g.fillStyle = bg; g.fillRect(0, 0, W, H);
+      const glow = g.createRadialGradient(W / 2, H * 1.2, 50, W / 2, H * 1.2, 900);
+      glow.addColorStop(0, 'rgba(181,125,236,.55)'); glow.addColorStop(1, 'rgba(181,125,236,0)');
+      g.fillStyle = glow; g.fillRect(0, 0, W, H);
+      g.strokeStyle = 'rgba(231,179,255,.6)'; g.lineWidth = 3; g.strokeRect(40, 40, W - 80, H - 80);
+      g.setLineDash([10, 10]); g.strokeStyle = 'rgba(231,179,255,.3)'; g.strokeRect(64, 64, W - 128, H - 128); g.setLineDash([]);
+      g.textAlign = 'center';
+      g.fillStyle = '#e7b3ff'; g.font = '600 26px Inter, sans-serif'; g.fillText('C E R T I F I C A T E   O F   C O M P L E T I O N', W / 2, 280);
+      g.fillStyle = '#fff'; g.font = '600 64px Inter, sans-serif'; g.fillText('Cyber Defense Fundamentals', W / 2, 380);
+      g.fillStyle = '#a99bbf'; g.font = '30px Inter, sans-serif'; g.fillText('proudly awarded to', W / 2, 460);
+      const tg = g.createLinearGradient(W / 2 - 400, 0, W / 2 + 400, 0);
+      tg.addColorStop(0, '#ffffff'); tg.addColorStop(0.5, '#b57dec'); tg.addColorStop(1, '#e7b3ff');
+      g.fillStyle = tg; g.font = 'italic 600 88px Inter, sans-serif'; g.fillText(name, W / 2, 580);
+      g.fillStyle = '#a99bbf'; g.font = '26px Inter, sans-serif';
+      g.fillText(`CyberShield Academy  ·  ${new Date().toLocaleDateString()}  ·  ID ${id}`, W / 2, 680);
+      const sg = g.createLinearGradient(W - 300, H - 300, W - 160, H - 160);
+      sg.addColorStop(0, '#b57dec'); sg.addColorStop(1, '#520ea3');
+      g.fillStyle = sg; g.beginPath(); g.arc(W - 230, H - 230, 80, 0, Math.PI * 2); g.fill();
+      g.font = '80px serif'; g.fillText('🛡️', W - 230, H - 202);
+      const a = document.createElement('a');
+      a.download = `CyberShield-Certificate-${id}.png`;
+      a.href = c.toDataURL('image/png');
+      a.click();
+    }
+
+    function render() {
+      renderList();
+      current === 'cert' ? renderCert() : renderChapter(current);
+    }
+
+    renderProgress();
+    render();
+    if (window.gsap) gsap.from('.dash-head > *', { y: 30, opacity: 0, stagger: 0.08, duration: 0.9, ease: 'power3.out' });
+  </script>
+</body>
+</html>

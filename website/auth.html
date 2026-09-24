@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Login · CyberShield</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <nav class="nav" id="nav">
+    <a href="index.html" class="logo"><span class="logo-mark"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg></span>CyberShield</a>
+    <ul class="nav-links">
+      <li><a class="nav-link" href="index.html">Home</a></li>
+      <li><a class="nav-link" href="index.html#courses">Courses</a></li>
+      <li><a class="nav-link" href="index.html#services">Services</a></li>
+      <li><a class="nav-link" href="index.html#contact">Contact</a></li>
+    </ul>
+    <ul class="nav-auth"><li><a class="btn btn-sm btn-ghost" href="index.html">← Back</a></li></ul>
+    <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false"><span></span><span></span><span></span></button>
+  </nav>
+
+  <main class="auth-page">
+    <div class="auth-glow"></div>
+    <div class="card auth-card">
+      <div class="tabs" id="tabs">
+        <span class="pill"></span>
+        <button type="button" data-tab="login" class="on">Login</button>
+        <button type="button" data-tab="register">Register</button>
+      </div>
+
+      <form id="loginForm" novalidate>
+        <h2 style="font-size:26px">Welcome back, <span class="grad-text">guardian</span></h2>
+        <p style="color:var(--muted);margin:6px 0 22px">Continue your comic missions.</p>
+        <div class="field"><label for="lEmail">Email</label><input id="lEmail" type="email" autocomplete="email" required /></div>
+        <div class="field"><label for="lPass">Password</label><input id="lPass" type="password" autocomplete="current-password" required /></div>
+        <div class="form-msg" role="alert"></div>
+        <button class="btn btn-block" type="submit">Login <span class="arrow">→</span></button>
+      </form>
+
+      <form id="registerForm" class="hidden" novalidate>
+        <h2 style="font-size:26px">Join the <span class="grad-text">academy</span></h2>
+        <p style="color:var(--muted);margin:6px 0 22px">Free account · start learning in seconds.</p>
+        <div class="field"><label for="rName">Full name (shown on certificate)</label><input id="rName" autocomplete="name" required /></div>
+        <div class="field"><label for="rEmail">Email</label><input id="rEmail" type="email" autocomplete="email" required /></div>
+        <div class="field"><label for="rPass">Password (min 8 characters)</label><input id="rPass" type="password" autocomplete="new-password" minlength="8" required /></div>
+        <div class="form-msg" role="alert"></div>
+        <button class="btn btn-block" type="submit">Create account <span class="arrow">→</span></button>
+      </form>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    const tabs = document.getElementById('tabs');
+    const forms = { login: document.getElementById('loginForm'), register: document.getElementById('registerForm') };
+
+    function show(tab) {
+      tabs.classList.toggle('reg', tab === 'register');
+      tabs.querySelectorAll('button').forEach(b => b.classList.toggle('on', b.dataset.tab === tab));
+      Object.entries(forms).forEach(([k, f]) => f.classList.toggle('hidden', k !== tab));
+      if (window.gsap) gsap.from(forms[tab].children, { y: 16, opacity: 0, stagger: 0.05, duration: 0.5, ease: 'power3.out' });
+    }
+    tabs.querySelectorAll('button').forEach(b => b.addEventListener('click', () => show(b.dataset.tab)));
+    show(location.hash === '#register' ? 'register' : 'login');
+
+    if (window.gsap) gsap.from('.auth-card', { y: 60, opacity: 0, scale: 0.96, duration: 1, ease: 'power4.out' });
+
+    const fail = (form, msg) => { form.querySelector('.form-msg').textContent = msg; if (window.gsap) gsap.fromTo(form, { x: -8 }, { x: 0, duration: 0.4, ease: 'elastic.out(1,0.3)' }); };
+
+    forms.login.addEventListener('submit', async e => {
+      e.preventDefault();
+      try { await Auth.login(lEmail.value, lPass.value); location.href = 'learn.html'; }
+      catch (err) { fail(forms.login, err.message); }
+    });
+    forms.register.addEventListener('submit', async e => {
+      e.preventDefault();
+      if (!rName.value.trim()) return fail(forms.register, 'Please enter your name.');
+      if (!rEmail.checkValidity()) return fail(forms.register, 'Please enter a valid email.');
+      if (rPass.value.length < 8) return fail(forms.register, 'Password must be at least 8 characters.');
+      try { await Auth.register(rName.value, rEmail.value, rPass.value); location.href = 'learn.html'; }
+      catch (err) { fail(forms.register, err.message); }
+    });
+  </script>
+</body>
+</html>
