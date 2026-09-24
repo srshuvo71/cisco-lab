@@ -29,6 +29,29 @@ function layoutOrbit() {
 layoutOrbit();
 addEventListener('resize', layoutOrbit);
 
+// Decorative QR code for the demo certificate (not a real, scannable code)
+(function drawQr() {
+  const box = document.getElementById('certQr');
+  if (!box) return;
+  const n = 25;
+  let seed = 7;
+  const rand = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const finder = (x, y) => [[0, 0], [n - 7, 0], [0, n - 7]].some(([fx, fy]) => x >= fx && x < fx + 7 && y >= fy && y < fy + 7);
+  const finderOn = (x, y) => {
+    for (const [fx, fy] of [[0, 0], [n - 7, 0], [0, n - 7]]) {
+      const dx = x - fx, dy = y - fy;
+      if (dx < 0 || dy < 0 || dx > 6 || dy > 6) continue;
+      return dx === 0 || dy === 0 || dx === 6 || dy === 6 || (dx >= 2 && dx <= 4 && dy >= 2 && dy <= 4);
+    }
+  };
+  let rects = '';
+  for (let y = 0; y < n; y++) for (let x = 0; x < n; x++) {
+    const on = finder(x, y) ? finderOn(x, y) : rand() > 0.52;
+    if (on) rects += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
+  }
+  box.innerHTML = `<svg viewBox="0 0 ${n} ${n}" fill="#140a26" shape-rendering="crispEdges">${rects}</svg>`;
+})();
+
 const hasGsap = window.gsap && window.ScrollTrigger;
 if (!hasGsap || document.documentElement.classList.contains('reduced')) {
   document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
@@ -120,7 +143,7 @@ if (!hasGsap || document.documentElement.classList.contains('reduced')) {
   gsap.fromTo('#certCard',
     { rotateX: 35, rotateY: -20, y: 80, opacity: 0, transformPerspective: 1000 },
     { rotateX: 0, rotateY: 0, y: 0, opacity: 1, ease: 'none',
-      scrollTrigger: { trigger: '#certificate', start: 'top 85%', end: 'center center', scrub: 1 } });
+      scrollTrigger: { trigger: '#certCard', start: 'top 95%', end: 'top 40%', scrub: 1 } });
 
   /* ---------- Counters ---------- */
   document.querySelectorAll('[data-count]').forEach(el => {

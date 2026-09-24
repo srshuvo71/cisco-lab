@@ -7,7 +7,7 @@
   <meta name="description" content="Learn cybersecurity through interactive comics, hands-on labs and earn a verified certificate." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Cinzel:wght@700;800&family=Kalam:wght@400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <script>document.documentElement.classList.remove('no-js')</script>
 </head>
@@ -172,24 +172,98 @@
 
     <!-- ================= CERTIFICATE ================= -->
     <section id="certificate">
-      <div class="container cert-wrap">
-        <div class="cert" id="certCard">
-          <small>CERTIFICATE OF COMPLETION</small>
-          <h3>Cyber Defense Fundamentals</h3>
-          <p style="color:var(--muted);margin:0">proudly awarded to</p>
-          <div class="name grad-text" style="margin:12px 0">Your Name Here</div>
-          <p style="color:var(--muted);font-size:13px;margin:0">CyberShield Academy · Verified ID CS-2026-0001</p>
-          <div class="seal">🛡️</div>
-        </div>
-        <div>
+      <div class="container">
+        <div style="text-align:center">
           <span class="eyebrow reveal">Get certified</span>
-          <h2 class="reveal" style="font-size:clamp(28px,4vw,46px);margin-top:18px">Finish the story. <span class="grad-text">Earn the badge.</span></h2>
-          <ul class="checklist">
-            <li class="reveal">Complete every comic chapter and quiz</li>
-            <li class="reveal">Download a personalised certificate instantly</li>
-            <li class="reveal">Unique verification ID for employers</li>
-            <li class="reveal">Share straight to LinkedIn</li>
-          </ul>
+          <h2 class="h-section reveal" style="margin-top:18px">Finish the story. <span class="grad-text">Earn the badge.</span></h2>
+          <p class="sub reveal">Complete every comic chapter and quiz to unlock a verified certificate with your full competency profile.</p>
+        </div>
+
+        <div class="xcert-scroll">
+        <div class="xcert" id="certCard" aria-label="Sample certificate">
+          <!-- Left panel -->
+          <aside class="xc-side">
+            <div class="xc-brand">
+              <div class="xc-logo">CS</div>
+              <div class="xc-brand-name">CYBER<span>SHIELD</span></div>
+              <div class="xc-tagline">LEARN • SIMULATE • PROTECT</div>
+            </div>
+            <div class="xc-heading">Courses Completed</div>
+            <ul class="xc-courses">
+              <li><span class="xc-num">01</span><span class="xc-ico">🎣</span><div><b>Phishing</b><small>Detect • Analyze • Respond</small><em>Completed ✓</em></div></li>
+              <li><span class="xc-num">02</span><span class="xc-ico">🔐</span><div><b>Password Security</b><small>Strengthen • Protect • Secure</small><em>Completed ✓</em></div></li>
+              <li><span class="xc-num">03</span><span class="xc-ico">🛡️</span><div><b>Network Defense</b><small>Monitor • Defend • Prevent</small><em>Completed ✓</em></div></li>
+              <li><span class="xc-num">04</span><span class="xc-ico">🔏</span><div><b>Cryptography</b><small>Encrypt • Decrypt • Secure</small><em>Completed ✓</em></div></li>
+              <li><span class="xc-num">05</span><span class="xc-ico">🕵️</span><div><b>OSINT</b><small>Collect • Investigate • Discover</small><em>Completed ✓</em></div></li>
+            </ul>
+            <div class="xc-mission">
+              <b>🏆 Mission Complete</b>
+              <small>All 5 courses successfully completed.</small>
+              <strong>You are a CyberShield Achiever!</strong>
+            </div>
+          </aside>
+
+          <!-- Middle white page -->
+          <div class="xc-page">
+            <div class="xc-stars">★★★★★</div>
+            <h3 class="xc-title">CERTIFICATE</h3>
+            <div class="xc-subtitle">OF ACHIEVEMENT</div>
+            <div class="xc-ribbon">PROUDLY PRESENTED TO</div>
+            <div class="xc-name">xxx</div>
+            <div class="xc-rule"></div>
+            <p class="xc-for">for successfully completing the entire</p>
+            <div class="xc-journey">CYBERSHIELD LEARNING JOURNEY</div>
+            <p class="xc-desc">This learner has successfully completed all CyberShield cybersecurity courses, scenario-based challenges and practical learning activities.</p>
+            <div class="xc-achieve">
+              <div><span>🎯</span>Completed All Courses</div>
+              <div><span>📋</span>Solved Realistic Scenarios</div>
+              <div><span>🧠</span>Made Smart Decisions</div>
+              <div><span>🛡️</span>Achieved All Learning Goals</div>
+              <div><span>🏆</span>Earned This Certificate</div>
+            </div>
+            <div class="xc-sign">
+              <div><b>xxx</b><small>Head of CyberShield</small></div>
+              <div class="xc-seal"><span>CYBERSHIELD<br />CERTIFIED<br />ACHIEVER</span></div>
+              <div><b>xxx</b><small>Founder &amp; Director</small></div>
+            </div>
+          </div>
+
+          <!-- Right panel -->
+          <aside class="xc-side">
+            <div class="xc-box">
+              <div class="xc-heading left">Credentials</div>
+              <dl class="xc-cred">
+                <dt>Certificate ID</dt><dd>xxx</dd>
+                <dt>Date Issued</dt><dd>xxx</dd>
+                <dt>Verification</dt><dd>Scan QR Code / Verify Certificate ID</dd>
+              </dl>
+              <div class="xc-qr" id="certQr" aria-hidden="true"></div>
+            </div>
+            <div class="xc-box">
+              <div class="xc-heading left">Your Cyber Competency Profile</div>
+              <ul class="xc-bars">
+                <li><span>🎣 Phishing</span><b>80%</b><i style="--w:80%"></i></li>
+                <li><span>🔐 Password Security</span><b>60%</b><i style="--w:60%"></i></li>
+                <li><span>🛡️ Network Defense</span><b>0%</b><i style="--w:0%"></i></li>
+                <li><span>🔏 Cryptography</span><b>0%</b><i style="--w:0%"></i></li>
+                <li><span>🕵️ OSINT</span><b>0%</b><i style="--w:0%"></i></li>
+              </ul>
+              <div class="xc-score">
+                <small>Overall Competency Score</small>
+                <b>28%</b>
+                <span>LEVEL</span>
+                <strong>DEVELOPING</strong>
+              </div>
+            </div>
+            <div class="xc-box xc-quote">
+              “Cybersecurity is not just a skill, it's a responsibility.”<br /><br />
+              You are now part of the next generation of cyber defenders.
+            </div>
+          </aside>
+        </div>
+        </div>
+
+        <div style="text-align:center;margin-top:40px">
           <a href="auth.html#register" class="btn reveal">Get Certified <span class="arrow">→</span></a>
         </div>
       </div>
