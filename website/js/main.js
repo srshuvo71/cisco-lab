@@ -49,7 +49,7 @@ addEventListener('resize', layoutOrbit);
     const on = finder(x, y) ? finderOn(x, y) : rand() > 0.52;
     if (on) rects += `<rect x="${x}" y="${y}" width="1" height="1"/>`;
   }
-  box.innerHTML = `<svg viewBox="0 0 ${n} ${n}" fill="#140a26" shape-rendering="crispEdges">${rects}</svg>`;
+  box.innerHTML = `<svg viewBox="0 0 ${n} ${n}" fill="#1b1030" shape-rendering="crispEdges">${rects}</svg>`;
 })();
 
 const hasGsap = window.gsap && window.ScrollTrigger;

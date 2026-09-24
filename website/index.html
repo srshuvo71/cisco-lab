@@ -7,7 +7,7 @@
   <meta name="description" content="Learn cybersecurity through interactive comics, hands-on labs and earn a verified certificate." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Cinzel:wght@700;800&family=Kalam:wght@400&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Cinzel:wght@500;700;800&family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500&family=Great+Vibes&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="css/style.css" />
   <script>document.documentElement.classList.remove('no-js')</script>
 </head>
@@ -179,88 +179,56 @@
           <p class="sub reveal">Complete every comic chapter and quiz to unlock a verified certificate with your full competency profile.</p>
         </div>
 
-        <div class="xcert-scroll">
-        <div class="xcert" id="certCard" aria-label="Sample certificate">
-          <!-- Left panel -->
-          <aside class="xc-side">
-            <div class="xc-brand">
-              <div class="xc-logo">CS</div>
-              <div class="xc-brand-name">CYBER<span>SHIELD</span></div>
-              <div class="xc-tagline">LEARN • SIMULATE • PROTECT</div>
-            </div>
-            <div class="xc-heading">Courses Completed</div>
-            <ul class="xc-courses">
-              <li><span class="xc-num">01</span><span class="xc-ico">🎣</span><div><b>Phishing</b><small>Detect • Analyze • Respond</small><em>Completed ✓</em></div></li>
-              <li><span class="xc-num">02</span><span class="xc-ico">🔐</span><div><b>Password Security</b><small>Strengthen • Protect • Secure</small><em>Completed ✓</em></div></li>
-              <li><span class="xc-num">03</span><span class="xc-ico">🛡️</span><div><b>Network Defense</b><small>Monitor • Defend • Prevent</small><em>Completed ✓</em></div></li>
-              <li><span class="xc-num">04</span><span class="xc-ico">🔏</span><div><b>Cryptography</b><small>Encrypt • Decrypt • Secure</small><em>Completed ✓</em></div></li>
-              <li><span class="xc-num">05</span><span class="xc-ico">🕵️</span><div><b>OSINT</b><small>Collect • Investigate • Discover</small><em>Completed ✓</em></div></li>
-            </ul>
-            <div class="xc-mission">
-              <b>🏆 Mission Complete</b>
-              <small>All 5 courses successfully completed.</small>
-              <strong>You are a CyberShield Achiever!</strong>
-            </div>
-          </aside>
+        <div class="cq-stage">
+          <div class="cq-sheet" id="certCard" role="img" aria-label="Example CyberQuest certificate of achievement with placeholder details">
+            <div class="cq-frame"></div>
+            <span class="cq-corner tl"></span><span class="cq-corner tr"></span><span class="cq-corner bl"></span><span class="cq-corner br"></span>
+            <svg class="cq-watermark" viewBox="0 0 24 24" fill="none" stroke="#6614d8" stroke-width="1" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><rect x="9" y="10.5" width="6" height="5" rx="1"/><path d="M10.5 10.5V9a1.5 1.5 0 013 0v1.5"/></svg>
 
-          <!-- Middle white page -->
-          <div class="xc-page">
-            <div class="xc-stars">★★★★★</div>
-            <h3 class="xc-title">CERTIFICATE</h3>
-            <div class="xc-subtitle">OF ACHIEVEMENT</div>
-            <div class="xc-ribbon">PROUDLY PRESENTED TO</div>
-            <div class="xc-name">xxx</div>
-            <div class="xc-rule"></div>
-            <p class="xc-for">for successfully completing the entire</p>
-            <div class="xc-journey">CYBERSHIELD LEARNING JOURNEY</div>
-            <p class="xc-desc">This learner has successfully completed all CyberShield cybersecurity courses, scenario-based challenges and practical learning activities.</p>
-            <div class="xc-achieve">
-              <div><span>🎯</span>Completed All Courses</div>
-              <div><span>📋</span>Solved Realistic Scenarios</div>
-              <div><span>🧠</span>Made Smart Decisions</div>
-              <div><span>🛡️</span>Achieved All Learning Goals</div>
-              <div><span>🏆</span>Earned This Certificate</div>
-            </div>
-            <div class="xc-sign">
-              <div><b>xxx</b><small>Head of CyberShield</small></div>
-              <div class="xc-seal"><span>CYBERSHIELD<br />CERTIFIED<br />ACHIEVER</span></div>
-              <div><b>xxx</b><small>Founder &amp; Director</small></div>
+            <div class="cq-content">
+              <div class="cq-brand">
+                <svg viewBox="0 0 24 24" fill="none" stroke="#6614d8" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+                <span>CYBER<b>QUEST</b></span>
+              </div>
+
+              <div class="cq-titles">
+                <div class="cq-title">CERTIFICATE</div>
+                <div class="cq-subtitle">OF ACHIEVEMENT</div>
+              </div>
+
+              <div class="cq-recipient">
+                <div class="cq-presented">This certificate is proudly presented to</div>
+                <div class="cq-name">xxx</div>
+                <div class="cq-name-rule"></div>
+              </div>
+
+              <div class="cq-footer">
+                <div class="cq-sig">
+                  <div class="cq-script">xxx</div>
+                  <div class="cq-line"></div>
+                  <div class="cq-who">XXX</div>
+                  <div class="cq-role">Head of CyberQuest</div>
+                </div>
+                <div class="cq-score">
+                  <div class="cq-ring"><div class="cq-ring-value">xxx<small>%</small></div></div>
+                  <div class="cq-score-label">OVERALL COMPETENCY SCORE</div>
+                </div>
+                <div class="cq-sig">
+                  <div class="cq-script">xxx</div>
+                  <div class="cq-line"></div>
+                  <div class="cq-who">XXX</div>
+                  <div class="cq-role">Founder &amp; Director</div>
+                </div>
+              </div>
+
+              <dl class="cq-credentials">
+                <div class="cq-qr" id="certQr" aria-hidden="true"></div>
+                <div class="cq-cred"><dt>Certificate ID</dt><dd>xxx</dd></div>
+                <div class="cq-cred"><dt>Date Issued</dt><dd>xxx</dd></div>
+                <div class="cq-cred"><dt>Verification</dt><dd class="text">Scan the QR code or enter the certificate ID on the CyberQuest verification page</dd></div>
+              </dl>
             </div>
           </div>
-
-          <!-- Right panel -->
-          <aside class="xc-side">
-            <div class="xc-box">
-              <div class="xc-heading left">Credentials</div>
-              <dl class="xc-cred">
-                <dt>Certificate ID</dt><dd>xxx</dd>
-                <dt>Date Issued</dt><dd>xxx</dd>
-                <dt>Verification</dt><dd>Scan QR Code / Verify Certificate ID</dd>
-              </dl>
-              <div class="xc-qr" id="certQr" aria-hidden="true"></div>
-            </div>
-            <div class="xc-box">
-              <div class="xc-heading left">Your Cyber Competency Profile</div>
-              <ul class="xc-bars">
-                <li><span>🎣 Phishing</span><b>80%</b><i style="--w:80%"></i></li>
-                <li><span>🔐 Password Security</span><b>60%</b><i style="--w:60%"></i></li>
-                <li><span>🛡️ Network Defense</span><b>0%</b><i style="--w:0%"></i></li>
-                <li><span>🔏 Cryptography</span><b>0%</b><i style="--w:0%"></i></li>
-                <li><span>🕵️ OSINT</span><b>0%</b><i style="--w:0%"></i></li>
-              </ul>
-              <div class="xc-score">
-                <small>Overall Competency Score</small>
-                <b>28%</b>
-                <span>LEVEL</span>
-                <strong>DEVELOPING</strong>
-              </div>
-            </div>
-            <div class="xc-box xc-quote">
-              “Cybersecurity is not just a skill, it's a responsibility.”<br /><br />
-              You are now part of the next generation of cyber defenders.
-            </div>
-          </aside>
-        </div>
         </div>
 
         <div style="text-align:center;margin-top:40px">
