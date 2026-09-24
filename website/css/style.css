@@ -244,6 +244,7 @@ section { position: relative; padding: 120px 0; }
   font-size: 13px; color: var(--lilac-soft);
 }
 .orbit-item b { display: block; font-size: 22px; margin-bottom: 2px; }
+.orbit-svg { width: 30px; height: 30px; display: block; margin: 0 auto; color: var(--lilac); filter: drop-shadow(0 0 6px rgba(231,179,255,.7)); }
 .core-caption { position: absolute; bottom: 7vh; left: 0; right: 0; text-align: center; padding: 0 16px; }
 .core-caption h2 { font-size: clamp(26px, 3.6vw, 42px); }
 .core-caption p { color: var(--muted); margin: 10px 0 0; }
